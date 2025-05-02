@@ -1,58 +1,72 @@
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Experiencia from './pages/Experiencia';
+import Formacion from './pages/Formacion';
+import Habilidades from './pages/Habilidades';
+import Portfolio from './pages/Portfolio';
 import Footer from './components/Footer';
-import { useEffect, useState } from 'react';
+import Navbar from './components/Navbar';
+import BackgroundVideo from './components/BackgroundVideo';
 
 function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark'); // por defecto
+  const [videoTarget, setVideoTarget] = useState(null); // 0 ó 2
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Cargar tema desde localStorage al iniciar
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') || 'light';
+    const storedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(storedTheme);
-
-    if (storedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', storedTheme === 'dark');
   }, []);
 
-  // Alternar tema oscuro / claro
   const toggleTheme = () => {
-    const html = document.documentElement;
-    const isDark = html.classList.contains('dark');
+    if (isTransitioning) return;
 
-    if (isDark) {
-      html.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      setTheme('light');
-    } else {
-      html.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      setTheme('dark');
-    }
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
 
-    console.log('Clases actuales en <html>:', html.className);
+    // Bloquear el botón
+    setIsTransitioning(true);
+    // Indicar hacia dónde reproducir
+    setVideoTarget(newTheme === 'light' ? 2 : 0);
+  };
+
+  const handleVideoDone = () => {
+    setVideoTarget(null);
+    setIsTransitioning(false);
   };
 
   return (
-    <div className="bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen">
+    <div
+  className={`transition-colors ease-in-out min-h-screen text-black dark:text-white ${
+    theme === 'light' ? 'duration-[2000ms]' : 'duration-[7000ms]'
+  }`}
+>
+      <BackgroundVideo playTo={videoTarget} onVideoDone={handleVideoDone} />
+
       <Router>
-        {/* Botón modo oscuro */}
-        <button
-          onClick={toggleTheme}
-          className="fixed top-4 right-4 z-50 bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-3 py-1 rounded shadow transition"
-        >
-          {theme === 'dark' ? '☀️' : '🌙'}
-        </button>
+      <button
+  onClick={toggleTheme}
+  disabled={isTransitioning}
+  className={`fixed top-4 right-4 z-50 px-3 py-1 rounded shadow
+    transition-colors transition-opacity duration-[7000ms] ease-in-out
+    ${isTransitioning ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}
+    bg-gray-200 dark:bg-gray-700 text-black dark:text-white`}
+>
+  {theme === 'dark' ? '☀️' : '🌙'}
+</button>
 
-        <div className="p-4">
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </div>
-
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/experiencia" element={<Experiencia />} />
+          <Route path="/formacion" element={<Formacion />} />
+          <Route path="/habilidades" element={<Habilidades />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+        </Routes>
         <Footer />
       </Router>
     </div>

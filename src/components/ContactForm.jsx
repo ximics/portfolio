@@ -16,8 +16,8 @@ function ContactForm() {
   };
 
   return (
-    <div className="mt-20">
-      <h2 className="text-3xl font-bold mb-6 border-b border-gray-300 dark:border-gray-700 pb-2">Contacto</h2>
+    <div className="">
+      <h2 className="text-3xl font-bold mb-6 border-b border-gray-300 dark:border-gray-700 pb-2">Hablemos</h2>
 
       {submitted && (
         <div className="bg-green-500 text-white p-4 mb-6 rounded-lg">
