@@ -22,7 +22,7 @@ function Footer() {
           <FaGithub />
         </a>
         <a
-          href="https://mariocanteroshimizu.eu"
+          href="maricanteroshimizu.site"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-cyan-500 transition-colors duration-300"

@@ -8,9 +8,9 @@ function Home() {
         {/* Imagen de perfil */}
         <div className="mb-8 md:mb-0 md:mr-10">
           <img
-            src="/images/captura_gasoleos_malagon.png"
+            src="/images/foto_perfil.jpg"
             alt="Foto de Mario"
-            className="w-64 h-64 rounded-full border-4 border-cyan-400 object-cover"
+            className="w-100 h-100 rounded-full border-4 border-cyan-400 object-cover"
           />
         </div>
 
@@ -29,7 +29,7 @@ function Home() {
           <ul className="space-y-2 text-sm text-gray-800 dark:text-gray-300">
             <li>📧 canteromario17@gmail.com</li>
             <li>📍 Sevilla (con disponibilidad de movilidad)</li>
-            <li>🌐 mariocanteroshimizu.eu</li>
+            <li>🌐 maricanteroshimizu.site</li>
             <li>https://linkedin.com/in/mario-cantero-shimizu</li>
           </ul>
 

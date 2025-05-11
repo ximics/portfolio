@@ -67,8 +67,8 @@ function App() {
           <Route path="/habilidades" element={<Habilidades />} />
           <Route path="/portfolio" element={<Portfolio />} />
         </Routes>
-        <Footer />
       </Router>
+      <Footer />
     </div>
   );
 }
